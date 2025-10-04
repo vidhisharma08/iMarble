@@ -47,7 +47,7 @@ public class Staff {
     private LocalDate leavingDate;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private StaffType type;
+    private StaffType staffType;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private SalaryType salaryType;
