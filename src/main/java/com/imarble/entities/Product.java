@@ -2,6 +2,8 @@ package com.imarble.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,6 +21,10 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class Product {
+	public enum Unit {
+	    SQFT, BAG, PIECE, BOX
+	}
+      
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pid;
@@ -27,7 +33,8 @@ public class Product {
 	@Column(nullable = false)
     private String title;
 	@Column(nullable = false)
-    private Integer unit;          
+	@Enumerated(EnumType.STRING)
+	private Unit unit;  
     private String prodesc;
     @Column(nullable = false)
     private Double pricePerUnit;
@@ -36,7 +43,7 @@ public class Product {
     @Column(nullable = false)
     private Integer minStockLevel;
     @Column(nullable = false)
-    private String status;
+    private Boolean status;
 
     @ManyToOne
     @JoinColumn(name = "cateid",nullable=false)

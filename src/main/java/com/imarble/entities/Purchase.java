@@ -11,6 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 @Entity
@@ -18,16 +19,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Builder
 public class Purchase { 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pid;
 	@Column(nullable = false)
-    private double billAmount;
+    private Double billAmount;
 	@Column(nullable = false,unique=true)
     private String invoiceNumber;
-	@Column(nullable = false)
-    private LocalDate date;
+	
+    private LocalDate date = LocalDate.now();
 
     @ManyToOne
     @JoinColumn(name = "clientid",nullable=false)
