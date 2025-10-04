@@ -27,6 +27,5 @@ public class Branch {
     private String address;
 	@Column(nullable = false, unique = true)
     private String mobile;
-	@Column(nullable = false)
     private Boolean status;
 }
