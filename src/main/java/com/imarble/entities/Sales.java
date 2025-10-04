@@ -26,20 +26,19 @@ public class Sales {
 	public enum SalesStatus {
 	    BOOKED, DISPATCHED, DONE
 	}
+	public enum SalesType {
+        CUSTOMER, DEALER
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long sid;
-    public enum SalesType {
-        CUSTOMER, DEALER
-    }
-
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private SalesType type;
     @Column(nullable = false)
     private LocalDate date;
     @Column(nullable = false)
-    private double billAmount;
+    private Double billAmount;
     @Column(nullable = false,unique=true)
     private String invoiceNumber;
     @Column(nullable = false)

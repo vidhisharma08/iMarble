@@ -15,7 +15,7 @@ public class SalesDto {
     private Long clientId;
     private Long branchId;
     private String invoiceNumber;
-    private double billAmount;
+    private Double billAmount;
     private String type;   // CUSTOMER / DEALER
     private String status; // BOOKED / DISPATCHED / DONE
     private LocalDate date;
