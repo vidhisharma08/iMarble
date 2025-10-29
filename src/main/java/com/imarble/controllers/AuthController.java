@@ -1,12 +1,12 @@
 package com.imarble.controllers;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +38,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ApiResponse<String>> login(@RequestBody Map<String, String> req) {
+    public ResponseEntity<ApiResponse<Map<String, Object>>> login(@RequestBody Map<String, String> req) {
         try {
             authManager.authenticate(
                     new UsernamePasswordAuthenticationToken(req.get("mobile"), req.get("password"))
@@ -51,7 +51,13 @@ public class AuthController {
         var userDetails = userDetailsService.loadUserByUsername(req.get("mobile"));
         String token = jwtUtils.generateToken(userDetails);
 
-        return ResponseEntity.ok(new ApiResponse<>(true, "Login successful", token));
-    }
+        // Fetch user details (name and role)
+        User user = userService.getUserByMobile(req.get("mobile"));
+        Map<String, Object> responseData = new HashMap<>();
+        responseData.put("token", token);
+        responseData.put("name", user.getName());
+        responseData.put("role", user.getRole().name()); // assuming Enum Role or String
 
+        return ResponseEntity.ok(new ApiResponse<>(true, "Login successful", responseData));
+    }
 }
